@@ -6,9 +6,9 @@ Online AI video tools charge per video, lock you into subscriptions, and
 upload your work to someone else's cloud. ClipForge runs entirely on your
 own machine, costs nothing per video, and needs no account.
 
-Give it a topic. It writes the script, records the voiceover, draws the
-slides, burns in the subtitles, and hands you one finished 9:16 MP4 —
-ready for Reels, Shorts and TikTok.
+Give it a topic. It writes the script, records the voiceover, paints a
+real AI picture for every scene, burns in the subtitles, and hands you
+one finished 9:16 MP4 — ready for Reels, Shorts and TikTok.
 
 ## Demo flow
 
@@ -63,9 +63,9 @@ offline script — a run never dies because of the network.
 |------|--------|--------------|
 | 1 | `script.py` | Gemini writes a 6-line narration, or offline templates step in |
 | 2 | `tts.py` | Free Edge neural voices read each line (edge-tts), timed with ffprobe |
-| 3 | `slides.py` | Pillow draws a 1080×1920 title card per line, colours shifting per scene |
+| 3 | `images.py` | A real AI picture is painted per scene (free Pollinations API, no key); drawn slides step in if the download fails |
 | 4 | `subtitles.py` | Scene timings become an SRT subtitle track |
-| 5 | `assemble.py` | ffmpeg zooms each slide (Ken Burns), joins the scenes, burns the subtitles in |
+| 5 | `assemble.py` | ffmpeg zooms each picture (Ken Burns), joins the scenes, burns the subtitles in |
 
 ## Design rules
 
@@ -76,7 +76,8 @@ offline script — a run never dies because of the network.
 
 ## Roadmap
 
-- [ ] Real image generation per scene (Stable Diffusion / API pluggable)
+- [x] Real image generation per scene (free Pollinations API)
+- [ ] Pluggable local image generation (Stable Diffusion on your own GPU)
 - [ ] Background music track mixing
 - [ ] Arabic and French voice presets
 - [ ] Horizontal (16:9) output mode

@@ -9,7 +9,7 @@ import argparse
 import os
 import tempfile
 
-from . import assemble, script, slides, subtitles, tts
+from . import assemble, images, script, slides, subtitles, tts
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -22,6 +22,8 @@ def main(argv: list[str] | None = None) -> int:
                         help="output mp4 path (default: out/clip.mp4)")
     parser.add_argument("--voice", default=tts.DEFAULT_VOICE,
                         help=f"edge-tts voice (default: {tts.DEFAULT_VOICE})")
+    parser.add_argument("--slides", action="store_true",
+                        help="use drawn text slides instead of AI scene images")
     parser.add_argument("--workdir", default=None,
                         help="folder for intermediate files (default: temp)")
     args = parser.parse_args(argv)
@@ -44,11 +46,14 @@ def main(argv: list[str] | None = None) -> int:
         audios.append(mp3)
         durations.append(tts.duration(mp3))
 
-    print("[3/4] drawing the slides")
+    print("[3/4] painting the scenes")
     slide_paths = []
     for i, line in enumerate(scenes):
         png = os.path.join(workdir, f"slide_{i:02d}.png")
-        slides.render_slide(line, i, len(scenes), png)
+        if args.slides:
+            slides.render_slide(line, i, len(scenes), png)
+        else:
+            images.fetch_scene_image(topic, line, i, len(scenes), png)
         slide_paths.append(png)
 
     print("[4/4] assembling the video")
